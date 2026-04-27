@@ -10,6 +10,8 @@ import plotly.express as px
 spacex_df = pd.read_csv("spacex_launch_dash.csv")
 max_payload = spacex_df['Payload Mass (kg)'].max()
 min_payload = spacex_df['Payload Mass (kg)'].min()
+min_value=0
+max_value=max_payload
 Launch_sites =  spacex_df['Launch Site'].value_counts()
 options=[{'label': 'All Sites', 'value': 'ALL'}]
 for name in Launch_sites.index:
@@ -40,7 +42,12 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
 
                                 html.P("Payload range (Kg):"),
                                 # TASK 3: Add a slider to select payload range
-                                #dcc.RangeSlider(id='payload-slider',...)
+                                dcc.RangeSlider(id='payload-slider',
+                                                min=0, 
+                                                max=max_payload,
+                                                step = 1000,
+                                                marks={},
+                                                value=[min_value, max_value] )
 
                                 # TASK 4: Add a scatter chart to show the correlation between payload and launch success
                                 #html.Div(dcc.Graph(id='success-payload-scatter-chart')),
